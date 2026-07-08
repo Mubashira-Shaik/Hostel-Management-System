@@ -1,0 +1,54 @@
+<!--
+    hibernate.cfg.xml — Hibernate Database Configuration
+    =====================================================
+    This file tells Hibernate:
+      1. Which database to connect to (MySQL in this case)
+      2. The username and password
+      3. Which SQL dialect to use (MySQL8Dialect)
+      4. Whether to auto-create/update tables (hbm2ddl.auto)
+
+    SETUP INSTRUCTIONS:
+    - Create a MySQL database named: hostel_db
+        CREATE DATABASE hostel_db;
+    - Replace 'root' and 'yourpassword' with your actual MySQL credentials.
+    - Hibernate will automatically create all tables on first run
+      because hbm2ddl.auto = update.
+
+    hbm2ddl.auto options:
+      create       — Drop and recreate all tables every run (data lost each time — for testing only)
+      update       — Create tables if not exist, update schema if changed (RECOMMENDED for development)
+      validate     — Check schema matches entities, throw error if mismatch (for production)
+      none         — Do nothing (you manage schema manually — for production)
+-->
+
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- ── JDBC Connection Settings ───────────────────────── -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hostel_db</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">Shaik@569</property>
+
+        <!-- ── SQL Dialect ────────────────────────────────────── -->
+        <!-- Tells Hibernate which SQL syntax to generate for MySQL 8 -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+	
+        <!-- ── Connection Pool Size ───────────────────────────── -->
+        <!-- Simple built-in pool — use HikariCP for production -->
+        <property name="hibernate.connection.pool_size">5</property>
+
+        <!-- ── Schema Management ──────────────────────────────── -->
+        <!-- 'update' creates tables if they don't exist, updates if schema changes -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- ── Show SQL in Console ────────────────────────────── -->
+        <!-- Set to false in production to avoid log spam -->
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">false</property>
+
+        <!-- ── Current Session Context ────────────────────────── -->
+        <property name="hibernate.current_session_context_class">thread</property>
+
+    </session-factory>
+</hibernate-configuration>
